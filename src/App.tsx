@@ -5,20 +5,24 @@ import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import { NewTransactionModal } from "./components/NewTransactionModal";
 import { GlobalStyle } from "./styles/global";
+import {  TransactionsProvider } from "./hooks/useTransactions";
 
 Modal.setAppElement('#root')// por questao de acessibilidade 
 
  export function App() {
+
    const[isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false); //criando estado,o primeiro e o estado,o segundo quando muda ele
-  function handleOpenNewTransactionModal() {
+   
+   function handleOpenNewTransactionModal() {
       setIsNewTransactionModalOpen(true);
   }
 
   function handleCloseNewTransactionModal(){
     setIsNewTransactionModalOpen(false);
   }
+
   return (
-    <>
+    <TransactionsProvider> 
       <Header onOpenNewTransactionModal = {handleOpenNewTransactionModal} /> 
 
       <Dashboard /> 
@@ -30,6 +34,6 @@ Modal.setAppElement('#root')// por questao de acessibilidade
 
       <GlobalStyle />
      
-    </>
+    </TransactionsProvider>
   );
 }

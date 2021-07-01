@@ -1,31 +1,42 @@
 import Modal from 'react-modal';
+import { FormEvent, useState, useContext } from 'react';
+
 import incomeImg from '../../assets/income.svg'
-import { FormEvent, useState } from 'react';
 import outcomeImg from '../../assets/outcome.svg'
 import closeImg from '../../assets/close.svg'
+
 import { Container, TransactionTypeContainer, RadioBox } from "./styles";
+import { useTransactions } from '../../hooks/useTransactions';
 
-
-interface NewTransactionModal{
+interface NewTransactionModalProps{
   isOpen: boolean;
   onRequestClose: () => void;
 }
-export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionModal){
+
+export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionModalProps){
+  const { createTransaction } = useTransactions(); // hook que criamos,na pasta hook
+
   const [title, setTitle] = useState('');
-  const [value, setValue] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
   const[type, setType] = useState('deposit'); //armazenando o estado dos btns da modal
   
-  function handleCreatNewTransaction(event: FormEvent) { //definimos que toda funcao que comecar com handle e pq ela veem atraves de uma acao do usuario
+  async  function handleCreateNewTransaction(event: FormEvent) { //definimos que toda funcao que comecar com handle e pq ela veem atraves de uma acao do usuario
       event.preventDefault(); //prevenindo o funcionamento padrao do html,para nao recarregar a pag quando der submit no form
   
-      console.log({
-        title, 
-        value, 
-        category, 
-        type,
-      })
-    }
+    await createTransaction({
+       title,
+       amount,
+       category,
+       type,
+     })
+     /*limpando os dados da modal depois de enviar os dados */
+     setTitle('');
+     setAmount(0);
+     setCategory(''); 
+     setType('deposit');    
+     onRequestClose(); //funcao para fechar a modal depois que os dados forem preenchidos
+  }
 
   return(
      <Modal 
@@ -38,7 +49,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
         <img src={closeImg} alt="Fechar modal"/>
       </button>
 
-      <Container onSubmit={handleCreatNewTransaction}>
+      <Container onSubmit={handleCreateNewTransaction}>
         <h2>Cadastrar transação </h2>
 
         <input placeholder="Titulo"
@@ -47,8 +58,8 @@ export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionMo
         />
 
         <input type="number" placeholder="Valor"
-         value={value}
-        onChange={event => setValue(Number(event.target.value))}//convertendo o retorno para number, poderiamos usar + no lugar de number 
+         value={amount}
+        onChange={event => setAmount(Number(event.target.value))}//convertendo o retorno para number, poderiamos usar + no lugar de number 
         />
 
         <TransactionTypeContainer>
