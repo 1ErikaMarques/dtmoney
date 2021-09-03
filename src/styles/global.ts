@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-export const GlobalStyle = createGlobalStyle` //export para acessar externamente
+export const GlobalStyle = createGlobalStyle` 
   :root {
     --background: #F0F2F5;
     --red: #E52E4D;
@@ -85,5 +85,5 @@ export const GlobalStyle = createGlobalStyle` //export para acessar externamente
     &:hover {
       filter: brightness(0.8);
     }
-  }
+  }  
 `
