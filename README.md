@@ -1,20 +1,20 @@
 # gofinances
 
-# Descrição
-Aplicação Web para gerenciar finanças.
+# Description
+Web application to manage finances.
 
-Esta aplicação web permite:   
-  * Cadastrar entradas e saidas financeiras
-  * Visualizar listagem com as entradas e saidas  
+This web application allows:
+   * Register financial entries and exits
+   * View listing with inputs and outputs
  
 
-# Tecnologias
+# Technologies
   * React
     * TypeScript  
   * CSS
     * Styled Components
 
-# Dependências
+# Dependencies
   * react-modal
   * polished
   * miragejs
